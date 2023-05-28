@@ -11,7 +11,8 @@ const eventsBottom = document.querySelectorAll(".events__bottom__item__img");
 const select = document.querySelectorAll(".select");
 const message = document.querySelector(".message");
 const logOut = document.querySelector(".logOut");
-
+const error = document.querySelector(".error");
+let isStudent = true;
 
 const fadeIn = (el, timeout, display) =>{
     el.style.opacity = 0;
@@ -33,7 +34,7 @@ const fadeM = (el, timeout, display) =>{
     el.style.transition = `opacity ${timeout}ms`
     el.style.opacity = 0;
     setTimeout(() => {
-        el.style.opacity = 0;
+        el.style.display = 'none';
     },timeout);
     
 };
@@ -52,10 +53,6 @@ if(localStorage.getItem('user') == 'true'){
     user.src = '/img/user.png';
     username.textContent = 'Василий';
     logInBtn.style.display = 'none';
-    eventsUp[1].classList.add("active");
-    eventsBottom[2].classList.add("active");
-    select[1].classList.add("active");
-    select[6].classList.add("active");
 }
 
 logOut.addEventListener("click", function(){
@@ -67,8 +64,7 @@ logOut.addEventListener("click", function(){
     location.reload();
 })
 
-localStorage.setItem('event1', true);
-localStorage.setItem('event6', true);
+
 
 for(let i = 0; i < 8; i++){
     if(localStorage.getItem('user') == 'true'){
@@ -123,12 +119,14 @@ modalButtons.forEach(el => {
         el.classList.add("activeleft");
         choosenElement.classList.remove("activeright"); 
         choosenElement = el;
-        modalTitle.textContent = 'Студенту'
+        modalTitle.textContent = 'Студенту';
+        isStudent = true;
     }else{
         choosenElement.classList.remove("activeleft");
         el.classList.add("activeright"); 
         choosenElement = el;
         modalTitle.textContent = 'Организатору';
+        isStudent = false;
     }
     })
     
@@ -143,10 +141,12 @@ modalButton.addEventListener("click", function(){
         username.textContent = 'Василий';
         logInBtn.style.display = 'none';
         localStorage.setItem('user', true);
-        eventsUp[1].classList.add("active");
-        eventsBottom[2].classList.add("active");
-        select[1].classList.add("active");
-        select[6].classList.add("active");
+        if(isStudent){
+            localStorage.setItem('isStudent', true);
+        }else{
+            localStorage.setItem('isStudent', false);
+
+        }
         for(let i = 0; i < 8; i++){
             if(localStorage.getItem('user') == 'true'){
                 if(localStorage.getItem("event" + i.toString()) == 'true'){
@@ -156,5 +156,9 @@ modalButton.addEventListener("click", function(){
             }
             
         }
+    }else{
+        fadeM(error, 1500, 'flex');
+        document.querySelector(".name").value = '';
+        document.querySelector(".password").value = '';
     }
 })

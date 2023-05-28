@@ -7,6 +7,8 @@ const modalButtons = document.querySelectorAll(".modal__form__header__item");
 const modalTitle = document.querySelector(".modal__form__title");
 const modalButton = document.querySelector(".modal__form__btn");
 const logOut = document.querySelector(".logOut");
+const error = document.querySelector(".error");
+let isStudent = true;
 
 const fadeIn = (el, timeout, display) =>{
     el.style.opacity = 0;
@@ -15,6 +17,22 @@ const fadeIn = (el, timeout, display) =>{
     setTimeout(() => {
         el.style.opacity = 1;
     }, 10);
+};
+
+const fadeM = (el, timeout, display) =>{
+    el.style.opacity = 0;
+    el.style.display = display;
+    el.style.transition = `opacity ${timeout}ms`
+    setTimeout(() => {
+        el.style.opacity = 1;
+    }, 10);
+    el.style.opacity = 1;
+    el.style.transition = `opacity ${timeout}ms`
+    el.style.opacity = 0;
+    setTimeout(() => {
+        el.style.display = 'none';
+    },timeout);
+    
 };
 
 const fadeOut = (el, timeout) =>{
@@ -59,12 +77,14 @@ modalButtons.forEach(el => {
         el.classList.add("activeleft");
         choosenElement.classList.remove("activeright"); 
         choosenElement = el;
-        modalTitle.textContent = 'Студенту'
+        modalTitle.textContent = 'Студенту';
+        isStudent = true;
     }else{
         choosenElement.classList.remove("activeleft");
         el.classList.add("activeright"); 
         choosenElement = el;
         modalTitle.textContent = 'Организатору';
+        isStudent = false;
     }
     })
     
@@ -79,5 +99,15 @@ modalButton.addEventListener("click", function(){
         username.textContent = 'Василий';
         logInBtn.style.display = 'none';
         localStorage.setItem('user', true);
+        if(isStudent){
+            localStorage.setItem('isStudent', true);
+        }else{
+            localStorage.setItem('isStudent', false);
+
+        }
+    }else{
+        fadeM(error, 1500, 'flex');
+        document.querySelector(".name").value = '';
+        document.querySelector(".password").value = '';
     }
 })

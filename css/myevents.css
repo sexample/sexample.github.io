@@ -101,6 +101,7 @@ h1 {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .my-events__item__left__icons__row img {
   background-color: rgb(156, 239, 205);
@@ -179,4 +180,27 @@ h1 {
 }
 .footer__items__links__img {
   height: 30px;
+}
+
+.message {
+  position: fixed;
+  height: 50px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: gray;
+  top: 80vh;
+  left: calc(50% - 175px);
+}
+
+.change {
+  display: none;
 }/*# sourceMappingURL=myevents.css.map */
