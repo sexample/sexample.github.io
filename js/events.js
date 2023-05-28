@@ -67,6 +67,9 @@ logOut.addEventListener("click", function(){
     location.reload();
 })
 
+localStorage.setItem('event1', true);
+localStorage.setItem('event6', true);
+
 for(let i = 0; i < 8; i++){
     if(localStorage.getItem('user') == 'true'){
         if(localStorage.getItem("event" + i.toString()) == 'true'){
